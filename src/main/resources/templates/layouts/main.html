@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">API services</title>
+
+    <link th:href="@{/css/sb-admin.css}" rel="stylesheet" />
+
+    <link th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css"
+          integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
+
+    <th:block layout:fragment="stylesheets"></th:block>
+    <th:block layout:fragment="javascript-before"></th:block>
+
+</head>
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <div layout:fragment="content"></div>
+    </div>
+    <div class="mb-3"></div>
+</div>
+
+<div th:replace="fragments/footer :: footer">&copy; 2018 The Static Templates</div>
+
+<script type="text/javascript" th:src="@{/lib/jquery/jquery-3.3.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/jquery/jquery.easing.min.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/sb-admin.js}"></script>
+
+<th:block layout:fragment="scripts"></th:block>
+
+</body>
+</html>

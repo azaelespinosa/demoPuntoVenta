@@ -1,0 +1,27 @@
+<company>
+  <product>
+    <discount>
+      <discountId>10</discountId>
+      <value>10</value>
+    </discount>
+    <discountId>10</discountId>
+    <id>14</id>
+    <name>Producto 10</name>
+    <price>15</price>
+    <upc>12331554</upc>
+  </product>
+  
+    <product>
+    <discount>
+      <discountId>11</discountId>
+      <value>10</value>
+    </discount>
+    <discountId>11</discountId>
+    <id>15</id>
+    <name>Producto 11</name>
+    <price>15</price>
+    <upc>12331554</upc>
+  </product>
+  
+ </company>
+
