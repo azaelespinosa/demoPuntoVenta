@@ -22,7 +22,7 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
  * @author: Azael Espinosa
  * @version: 12/10/2018/V1.0
  */
-
+@Ignore
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @DataJpaTest
