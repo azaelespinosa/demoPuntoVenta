@@ -1,5 +1,6 @@
 package exercise.model;
 
+import exercise.common.entities.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -19,11 +20,11 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "PRODUCT")
-public class ProductEntity {
+public class ProductEntity extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "PRODUCT_ID",unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PRODUCT_ID", nullable = false, unique = true)
     private Long productId;
 
     @Column(name = "PRICE", nullable = false)

@@ -33,8 +33,8 @@ public class SwaggerConfig {
 
     private ApiInfo metadata() {
         return new ApiInfoBuilder()
-                .title("API V 1.0")
-                .description("Administracion de Productos.")
+                .title("API V 1.1.0")
+                .description("Administracion.")
                 .version("2.0.0")
                 .build();
     }

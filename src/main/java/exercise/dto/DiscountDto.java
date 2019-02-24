@@ -21,6 +21,5 @@ import java.io.Serializable;
 public class DiscountDto implements Serializable{
 
     private Long discountId;
-
     private Long value;
 }

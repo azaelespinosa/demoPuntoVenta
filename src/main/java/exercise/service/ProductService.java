@@ -14,7 +14,7 @@ public interface ProductService {
 
     void saveProduct();
 
-    void saveOneProduct(ProductDto dto);
+    ProductDto saveOneProduct(ProductDto dto);
 
     List<ProductDto> findAllProducts();
 
@@ -22,5 +22,5 @@ public interface ProductService {
 
     void deleteProduct(Long productId);
 
-    void updateProduct(ProductDto productDto);
+    ProductDto updateProduct(ProductDto productDto);
 }

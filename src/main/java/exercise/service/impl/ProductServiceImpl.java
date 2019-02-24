@@ -1,14 +1,15 @@
 package exercise.service.impl;
 
-import exercise.dto.DiscountDto;
+import exercise.aspects.RequestLog;
+import exercise.aspects.Time;
+import exercise.common.exceptions.CustomException;
+import exercise.common.services.BaseService;
 import exercise.dto.ProductDto;
 import exercise.model.DiscountEntity;
 import exercise.model.ProductEntity;
 import exercise.repository.ProductRepository;
 import exercise.service.ProductService;
-import exercise.util.ConvertUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -32,13 +33,124 @@ import org.w3c.dom.Element;
 
 @Slf4j
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl extends BaseService<ProductRepository,ProductEntity > implements ProductService {
 
-    @Autowired
-    ProductRepository productRepository;
+    /**
+     * Metodo para guardar un producto via REST.
+     * @param productDto
+     * @return
+     */
+    @Time
+    @RequestLog
+    @Transactional
+    public ProductDto saveOneProduct(ProductDto productDto){
 
-    @Autowired
-    ConvertUtil convertUtil;
+        log.info("Method saveOneProduct iniciando.");
+
+        if (Optional.ofNullable(productDto).map(ProductDto::getName).map(t -> t == null).orElse(true)) {
+            throw new RuntimeException("Favor de enviar un producto.");
+        }
+
+        try {
+            return create(productDto,ProductDto.class);
+
+        }catch(Exception e){
+            throw new CustomException("Ocurrio un error al guardar el producto.");
+        }
+
+
+    }
+
+    /**
+     * Metodo para guardar un producto via REST.
+     * @param productDto
+     * @return
+     */
+    @Time
+    @RequestLog
+    @Transactional
+    public ProductDto updateProduct(ProductDto productDto){
+
+        log.info("Method updateProduct iniciando.");
+
+        if (Optional.ofNullable(productDto).map(ProductDto::getProductId).map(t -> t == null).orElse(true)) {
+            throw new RuntimeException("Favor de enviar un producto.");
+        }
+
+        try {
+
+            return update(productDto.getProductId(),productDto,ProductDto.class);
+
+        }catch(Exception e){
+            throw new RuntimeException("Ocurrio un error al guardar el producto.");
+        }
+
+
+    }
+
+    /**
+     * Metodo para busqueda de todos los productos.
+     * @param
+     * @return
+     */
+    @Time
+    @RequestLog
+    public List<ProductDto> findAllProducts(){
+
+        log.info("Method findAllProducts iniciando.");
+
+        try {
+
+            return findAll(ProductDto.class);
+
+        }catch(Exception e){
+            throw new RuntimeException("Ocurrio un error al buscar el producto.");
+        }
+
+    }
+
+    /**
+     * Metodo para busqueda de todos los productos.
+     * @param
+     * @return
+     */
+    @Time
+    @RequestLog
+    public ProductDto findProductById(Long productId){
+
+        log.info("Method findProductById iniciando.");
+
+        try {
+
+            return findById(productId,ProductDto.class);
+
+        }catch(Exception e){
+            throw new RuntimeException("Ocurrio un error al buscar el producto.");
+        }
+
+    }
+
+    /**
+     * Metodo para busqueda de todos los productos.
+     * @param
+     * @return
+     */
+    @Time
+    @RequestLog
+    public void deleteProduct(Long productId){
+
+        log.info("Method deleteProduct iniciando.");
+
+        try {
+
+            delete(productId);
+
+        }catch(Exception e){
+            throw new RuntimeException("Ocurrio un error al borrar el producto : "+ productId);
+        }
+
+
+    }
 
 
     /**
@@ -46,6 +158,8 @@ public class ProductServiceImpl implements ProductService {
      * @param
      * @return
      */
+    @Time
+    @RequestLog
     @Transactional
     public void saveProduct(){
 
@@ -53,10 +167,9 @@ public class ProductServiceImpl implements ProductService {
 
         List<ProductEntity> lstProducts = xmlToEntity();
 
-
         try {
             //TODO validar lista vacia
-          productRepository.saveAll(lstProducts);
+            repository.saveAll(lstProducts);
 
         }catch(Exception e){
             throw new RuntimeException("Ocurrio un error al guardar los productos.");
@@ -69,6 +182,8 @@ public class ProductServiceImpl implements ProductService {
      * Metodo para cargar un archivo XML y crear una lista entidades de producto.
      * @return List<ProductEntity>
      */
+    @Time
+    @RequestLog
     private List<ProductEntity> xmlToEntity(){
         log.info("Method xmlToEntity iniciando.");
         List<ProductEntity> lst = new ArrayList<>();
@@ -121,8 +236,8 @@ public class ProductServiceImpl implements ProductService {
                             log.info("Discount ID : " + eElementChild.getElementsByTagName("discountId").item(0).getTextContent());
                             log.info("value : " + eElementChild.getElementsByTagName("value").item(0).getTextContent());
 
-                             discountId = Long.valueOf(eElementChild.getElementsByTagName("discountId").item(0).getTextContent());
-                             value = Long.valueOf(eElementChild.getElementsByTagName("value").item(0).getTextContent());
+                            discountId = Long.valueOf(eElementChild.getElementsByTagName("discountId").item(0).getTextContent());
+                            value = Long.valueOf(eElementChild.getElementsByTagName("value").item(0).getTextContent());
                         }
                     }
 
@@ -152,214 +267,5 @@ public class ProductServiceImpl implements ProductService {
         return lst;
     }
 
-
-
-    /**
-     * Metodo para construir la lista de entidades.
-     * @param lstDto
-     * @return List<ProductEntity>
-     */
-    private List<ProductEntity> buildProduct (List<ProductDto> lstDto){
-        log.info("Method buildProduct iniciando.");
-        List<ProductEntity> lstEntity = new ArrayList<>();
-
-        try {
-            //iteramos la lista
-            lstDto.forEach(l -> {
-                //Construimos la lista de entidades a persistir
-                lstEntity.add(
-                        buidlProductEntity(l)
-                );
-            });
-        }catch (Exception e){
-            throw new RuntimeException("Ocurrio un error al construir el objeto.");
-        }
-
-        return lstEntity;
-    }
-
-    /**
-     * Metodo para guardar un producto via REST.
-     * @param productDto
-     * @return
-     */
-    @Transactional
-    public void saveOneProduct(ProductDto productDto){
-
-        log.info("Method saveOneProduct iniciando.");
-
-        if (Optional.ofNullable(productDto).map(ProductDto::getName).map(t -> t == null).orElse(true)) {
-            throw new RuntimeException("Favor de enviar un producto.");
-        }
-
-        try {
-
-            productRepository.save(buidlProductEntity(productDto));
-
-        }catch(Exception e){
-            throw new RuntimeException("Ocurrio un error al guardar el producto.");
-        }
-
-
-    }
-
-    /**
-     * Metodo para guardar un producto via REST.
-     * @param productDto
-     * @return
-     */
-    @Transactional
-    public void updateProduct(ProductDto productDto){
-
-        log.info("Method updateProduct iniciando.");
-
-        if (Optional.ofNullable(productDto).map(ProductDto::getProductId).map(t -> t == null).orElse(true)) {
-            throw new RuntimeException("Favor de enviar un producto.");
-        }
-
-        Optional<ProductEntity> opti = productRepository.findById(productDto.getProductId());
-
-        //Valido que existe el resultado
-        if(!opti.isPresent()){
-            throw new RuntimeException("El producto "+productDto.getProductId()+" no existe .");
-        }
-
-
-        try {
-
-            productRepository.save(buidlProductEntity(productDto));
-
-        }catch(Exception e){
-            throw new RuntimeException("Ocurrio un error al guardar el producto.");
-        }
-
-
-    }
-
-    /**
-     * Metodo para busqueda de todos los productos.
-     * @param
-     * @return
-     */
-
-    public List<ProductDto> findAllProducts(){
-
-        log.info("Method findAllProducts iniciando.");
-
-        try {
-
-            List<ProductEntity>  productLst = productRepository.findAll();
-
-            //TODO validar lista vacia
-            return enttityToDto(productLst);
-
-        }catch(Exception e){
-            throw new RuntimeException("Ocurrio un error al buscar el producto.");
-        }
-
-    }
-
-    /**
-     * Metodo para busqueda de todos los productos.
-     * @param
-     * @return
-     */
-
-    public ProductDto findProductById(Long productId){
-
-        log.info("Method findAll iniciando.");
-
-
-            Optional<ProductEntity> opti = productRepository.findById(productId);
-
-            //Valido que existe el resultado
-            if(!opti.isPresent()){
-                throw new RuntimeException("El producto "+productId+" no existe .");
-            }
-
-            //Construyo el objeto
-            return buidlProductDto(opti.get());
-
-    }
-
-    /**
-     * Metodo para busqueda de todos los productos.
-     * @param
-     * @return
-     */
-
-    public void deleteProduct(Long productId){
-
-        log.info("Method deleteProduct iniciando.");
-
-        Optional<ProductEntity> opti = productRepository.findById(productId);
-
-        //Valido que existe el resultado
-        if(!opti.isPresent()){
-            throw new RuntimeException("El producto "+productId+" no existe");
-        }
-
-        try {
-
-            productRepository.delete(opti.get());
-
-        }catch(Exception e){
-            throw new RuntimeException("Ocurrio un error al borrar el producto : "+ productId);
-        }
-
-
-    }
-
-    /**
-     * Metodo para mapeo de objetos complejos.
-     * @param
-     * @return
-     */
-    private List<ProductDto> enttityToDto(List<ProductEntity> productLst){
-        return convertUtil.convert(productLst,ProductDto.class);
-    }
-
-    //TODO crear utilidades genericas de construccion de objetos.
-    /**
-     * Metodo para construir una entidad a partir de un DTO
-     * @param productDto
-     * @return ProductEntity
-     */
-    private ProductEntity buidlProductEntity(ProductDto productDto){
-        return  ProductEntity.builder()
-                .productId(productDto.getProductId())
-                .price(productDto.getPrice())
-                .name(productDto.getName())
-                .upc(productDto.getUpc())
-
-                .discount(
-                        productDto.getDiscount()!=null?DiscountEntity.builder()
-                                .discountId(productDto.getDiscount().getDiscountId())
-                                .value(productDto.getDiscount().getValue())
-                                .build():null
-                )
-                .build();
-    }
-
-    /**
-     * Metodo para construir un DTO a partir de una Entidad
-     * @param product
-     * @return ProductDto
-     */
-    private ProductDto buidlProductDto(ProductEntity product){
-        return  ProductDto.builder()
-                .productId(product.getProductId())
-                .price(product.getPrice())
-                .name(product.getName())
-                .upc(product.getUpc())
-
-                .discount(
-                        product.getDiscount()!=null?DiscountDto.builder()
-                                .discountId(product.getDiscount().getDiscountId())
-                                .value(product.getDiscount().getValue())
-                                .build():null
-                )
-                .build();
-    }
 
 }

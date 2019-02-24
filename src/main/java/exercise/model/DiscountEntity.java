@@ -1,5 +1,6 @@
 package exercise.model;
 
+import exercise.common.entities.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,10 +18,10 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "DISCOUNT")
-public class DiscountEntity {
+public class DiscountEntity extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "DISCOUNT_ID",unique = true, nullable = false)
     private Long discountId;
 
