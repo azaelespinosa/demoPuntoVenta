@@ -8,6 +8,10 @@ public class CustomException extends RuntimeException {
         super(message);
     }
 
+    public CustomException(String message, Throwable err) {
+        super(message, err);
+    }
+
     public CustomException(CustomErrorMessage customErrorMessage) {
         super(customErrorMessage.getMessage());
         this.customErrorMessage = customErrorMessage;

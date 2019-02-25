@@ -18,8 +18,7 @@ public class EntityNotFoundException extends ValidationException {
 
     private static String generateMessage(String entity, Map<String, String> searchParams) {
         return StringUtils.capitalize(entity.replace("Entity","")) +
-                " was not found for parameters " +
-                searchParams;
+                " was not found for parameters " +  searchParams;
     }
 
     private static <K, V> Map<K, V> toMap(Class<K> keyType, Class<V> valueType, Object... entries) {
