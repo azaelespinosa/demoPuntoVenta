@@ -87,4 +87,10 @@ public class CustomerController {
         Resources<CustomerDto> result = new Resources<CustomerDto>(allCustomers, link);
         return result;
     }
+
+    @GetMapping(value = "/order/jdbc/{orderId}" )
+    @ApiOperation(value = "Busca una orden por id via jdbc.")
+    public OrderDto getJdbcOrderById(@PathVariable Long orderId) {
+        return orderService.getJdbcOrderById(orderId);
+    }
 }
