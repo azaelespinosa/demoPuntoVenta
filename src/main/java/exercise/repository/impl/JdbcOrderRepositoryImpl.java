@@ -3,6 +3,7 @@ package exercise.repository.impl;
 import exercise.dto.OrderDto;
 import exercise.repository.JdbcOrderRepository;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.transaction.Transactional;
@@ -35,7 +36,32 @@ public class JdbcOrderRepositoryImpl implements JdbcOrderRepository {
         }
     }
 
+
+    public Long findCustomerIdByOrderId(Long orderId){
+
+        String sql = "SELECT CUSTOMER_ID FROM `ORDER` WHERE ORDER_ID = ?";
+
+        Long customerId = jdbcTemplate.queryForObject(
+                sql, new Object[] { orderId }, Long.class);
+
+        return customerId;
+
+    }
+
+    public OrderDto findOrderByOrderId(Long orderId){
+
+        String sql = "SELECT * FROM `ORDER` WHERE ORDER_ID = ?";
+
+        OrderDto orderDto = (OrderDto)jdbcTemplate.queryForObject(
+                sql, new Object[] { orderId },
+                new BeanPropertyRowMapper(OrderDto.class));
+
+        return orderDto;
+    }
+
+
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 }
+

@@ -64,4 +64,18 @@ public class OrderServiceImpl extends BaseService<OrderRepository,OrderEntity> i
         return opt.get();
 
     }
+
+    public OrderDto getJdbcOrderByOrderId(Long orderId){
+        Objects.requireNonNull(orderId,"El order id es requerido");
+
+        return jdbcOrderRepository.findOrderByOrderId(orderId);
+
+    }
+
+    public Long findCustomerIdByOrderId(Long orderId){
+        Objects.requireNonNull(orderId,"El order id es requerido");
+
+        return jdbcOrderRepository.findCustomerIdByOrderId(orderId);
+
+    }
 }

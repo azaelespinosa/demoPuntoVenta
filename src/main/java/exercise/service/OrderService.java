@@ -11,5 +11,7 @@ public interface OrderService {
     OrderDto createOrder(OrderDto dto);
     OrderDto updateOrder(OrderDto dto);
     OrderDto getJdbcOrderById(Long orderId);
+    OrderDto getJdbcOrderByOrderId(Long orderId);
+    Long findCustomerIdByOrderId(Long orderId);
 
 }

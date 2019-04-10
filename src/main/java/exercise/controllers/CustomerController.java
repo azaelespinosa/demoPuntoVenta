@@ -89,8 +89,21 @@ public class CustomerController {
     }
 
     @GetMapping(value = "/order/jdbc/{orderId}" )
-    @ApiOperation(value = "Busca una orden por id via jdbc.")
+    @ApiOperation(value = "Busca una orden por id via jdbc con labmda")
     public OrderDto getJdbcOrderById(@PathVariable Long orderId) {
         return orderService.getJdbcOrderById(orderId);
+    }
+
+    @GetMapping(value = "/order/jdbc/id/{orderId}" )
+    @ApiOperation(value = "Busca una orden por id via jdbc con queryForObject y BeanPropertyRowMapper")
+    public OrderDto getJdbcOrderByOrderId(@PathVariable Long orderId) {
+        return orderService.getJdbcOrderByOrderId(orderId);
+    }
+
+
+    @GetMapping(value = "/order/jdbc/customer/{orderId}" )
+    @ApiOperation(value = "Busca una customer id por orderid via jdbc con queryForObject")
+    public Long findCustomerIdByOrderId(@PathVariable Long orderId) {
+        return orderService.findCustomerIdByOrderId(orderId);
     }
 }
