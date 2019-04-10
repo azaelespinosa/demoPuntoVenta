@@ -29,6 +29,7 @@ public class AppConfig {
         return modelMapper;
     }
 
+    //Configuracion JdbcTemplate para el bean de Ordenes.
     @Bean
     public JdbcOrderRepository jdbcOrderRepository(JdbcTemplate jdbcTemplate) {
         JdbcOrderRepositoryImpl repository = new JdbcOrderRepositoryImpl();
