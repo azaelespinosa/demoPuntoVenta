@@ -4,6 +4,7 @@ package exercise.controllers;
 import exercise.dto.ProductDto;
 import exercise.dto.ProductLst;
 import exercise.service.ProductService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,5 +55,16 @@ public class ProductController {
         return productService.findProductById(productId);
     }
 
+    @GetMapping("/findby/jdbc/name/{productId}")
+    @ApiOperation(value = "Busca un producto por id via jdbc con queryForObject")
+    public String findProductNameById( @RequestParam(value = "productId", required = false) Long productId){
+        return productService.findProductNameById(productId);
+    }
+
+    @GetMapping("/findby/jdbc/{productId}")
+    @ApiOperation(value = "Busca un producto por id via jdbc con queryForObject y BeanPropertyRowMapper")
+    public ProductDto jdbcFindProductById( @RequestParam(value = "productId", required = false) Long productId){
+        return productService.jdbcFindProductById(productId);
+    }
 
 }

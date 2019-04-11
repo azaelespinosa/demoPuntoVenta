@@ -23,4 +23,8 @@ public interface ProductService {
     void deleteProduct(Long productId);
 
     ProductDto updateProduct(ProductDto productDto);
+
+    String findProductNameById(Long productId);
+
+    ProductDto jdbcFindProductById(Long productId);
 }

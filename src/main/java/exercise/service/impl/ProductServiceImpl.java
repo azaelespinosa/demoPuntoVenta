@@ -5,11 +5,13 @@ import exercise.aspects.Time;
 import exercise.common.exceptions.CustomException;
 import exercise.common.services.BaseService;
 import exercise.dto.ProductDto;
+import exercise.jdbcrepository.JdbcProductRepository;
 import exercise.model.DiscountEntity;
 import exercise.model.ProductEntity;
 import exercise.repository.ProductRepository;
 import exercise.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -34,6 +36,9 @@ import org.w3c.dom.Element;
 @Slf4j
 @Service
 public class ProductServiceImpl extends BaseService<ProductRepository,ProductEntity > implements ProductService {
+
+    @Autowired
+    JdbcProductRepository jdbcProductRepository;
 
     /**
      * Metodo para guardar un producto via REST.
@@ -267,5 +272,12 @@ public class ProductServiceImpl extends BaseService<ProductRepository,ProductEnt
         return lst;
     }
 
+    public String findProductNameById(Long productId){
+        return jdbcProductRepository.findProductNameById(productId);
+    }
+
+    public ProductDto jdbcFindProductById(Long productId){
+        return jdbcProductRepository.findProductById(productId);
+    }
 
 }

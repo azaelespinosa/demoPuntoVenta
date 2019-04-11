@@ -1,4 +1,4 @@
-package exercise.repository;
+package exercise.jdbcrepository;
 
 import exercise.dto.OrderDto;
 

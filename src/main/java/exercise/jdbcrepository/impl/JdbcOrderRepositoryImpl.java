@@ -1,7 +1,7 @@
-package exercise.repository.impl;
+package exercise.jdbcrepository.impl;
 
 import exercise.dto.OrderDto;
-import exercise.repository.JdbcOrderRepository;
+import exercise.jdbcrepository.JdbcOrderRepository;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

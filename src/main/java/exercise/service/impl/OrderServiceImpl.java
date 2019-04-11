@@ -4,7 +4,7 @@ import exercise.common.exceptions.CustomException;
 import exercise.common.services.BaseService;
 import exercise.dto.OrderDto;
 import exercise.model.OrderEntity;
-import exercise.repository.JdbcOrderRepository;
+import exercise.jdbcrepository.JdbcOrderRepository;
 import exercise.repository.OrderRepository;
 import exercise.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
