@@ -1,8 +1,6 @@
-# xml-test
-Proyecto prueba con spring boot para cargar un xml desde una ruta.
+# Punto de venta
+Proyecto prueba con spring boot para punto de venta
 
-Cuenta tambien con servicios de administracion de producto via REST.
-
-MySql AWS, se necesita activar la instancia.
+MySql 
 
 V1.0
