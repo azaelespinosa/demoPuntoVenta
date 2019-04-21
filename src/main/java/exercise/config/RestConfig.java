@@ -27,18 +27,15 @@ public class RestConfig {
     }
 
 
-   /* @Bean
-    public RestTemplate customRestTemplate(RestTemplateBuilder restTemplateBuilder) {
+    @Bean
+    public RestTemplate purchaseRestTemplate(RestTemplateBuilder restTemplateBuilder, ResponseErrorHandler  responseErrorHandler) {
         return restTemplateBuilder
                 .setConnectTimeout(CONNECT_TIMEOUT)
                 .setReadTimeout(READ_TIMEOUT)
-                .additionalInterceptors((httpRequest, bytes, clientHttpRequestExecution) -> {
-                    httpRequest.getHeaders().add(env.getProperty("custom.auth.header.key"), env.getProperty("custom.auth.header.value"));
-                    return clientHttpRequestExecution.execute(httpRequest, bytes);
-                })
-                .rootUri(env.getProperty("custom.auth.url"))
+                .errorHandler(responseErrorHandler)
+                .rootUri(env.getProperty("purchase.url"))
                 .build();
-    }*/
+    }
 
     @Bean
     public ResponseErrorHandler responseErrorHandler() {

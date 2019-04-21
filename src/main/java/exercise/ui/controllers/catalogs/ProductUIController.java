@@ -1,8 +1,8 @@
 package exercise.ui.controllers.catalogs;
 
 
-import exercise.dto.ProductDto;
-import exercise.service.ProductService;
+import exercise.orders.dto.ItemDto;
+import exercise.orders.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -19,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ProductUIController {
 
-    private final ProductService productService;
+    private final ItemService itemService;
 
 
     @GetMapping
@@ -27,7 +26,7 @@ public class ProductUIController {
 
         try {
 
-            List<ProductDto> lstProducts = productService.findAllProducts();
+            List<ItemDto> lstProducts = itemService.findAllProducts();
 
             model.addAttribute("products", lstProducts);
 
@@ -43,13 +42,13 @@ public class ProductUIController {
     }
 
     @GetMapping(value = "/upload")
-    public String upload(final ProductDto productDto, Model model) {
+    public String upload(final ItemDto itemDto, Model model) {
 
         try {
 
-            productService.saveProduct();
+            itemService.saveProduct();
 
-            List<ProductDto> lstProducts = productService.findAllProducts();
+            List<ItemDto> lstProducts = itemService.findAllProducts();
 
             model.addAttribute("products", lstProducts);
 
