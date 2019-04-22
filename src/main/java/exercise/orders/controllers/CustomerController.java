@@ -4,6 +4,7 @@ import exercise.orders.dto.CustomerDto;
 import exercise.orders.dto.OrderDto;
 import exercise.orders.service.CustomerService;
 import exercise.orders.service.OrderService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
@@ -17,6 +18,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = "/customers")
+@Api(description = "Clientes y ordenes")
 public class CustomerController {
 
     @Autowired

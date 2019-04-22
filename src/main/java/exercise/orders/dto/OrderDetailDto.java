@@ -19,6 +19,7 @@ public class OrderDetailDto {
     private Long itemId;
     private String note;
     private BigDecimal price;
+    private ItemDto item;
 
 
 }

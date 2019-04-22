@@ -10,12 +10,16 @@ import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Optional;
 
+/**
+ * Obtencion de datos con JDBC Template declarando un Bean
+ */
+
 @Transactional
 public class JdbcOrderRepositoryImpl implements JdbcOrderRepository {
 
     JdbcTemplate jdbcTemplate;
 
-    final String QUERY_FIND_BY_ORDER_ID = "SELECT ORDER_ID, PRICE, QTY, CUSTOMER_ID, PRODUCT_ID FROM `ORDER` WHERE ORDER_ID = ?";
+    final String QUERY_FIND_BY_ORDER_ID = "SELECT ORDER_ID, PRICE, QTY, CUSTOMER_ID FROM `ORDER` WHERE ORDER_ID = ?";
 
     @Override
     public Optional<OrderDto> findByOrderId(Long orderId) {

@@ -2,7 +2,6 @@ package exercise.orders.model;
 
 import exercise.common.entities.BaseEntity;
 import lombok.*;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -34,8 +33,11 @@ public class OrderDetailEntity extends BaseEntity {
     @Column(name = "PRICE")
     private BigDecimal price;
 
+    @Column(name = "ITEM_ID")
+    private Long itemId;
+
     @OneToOne
-    @JoinColumn(name = "ITEM_ID")
+    @JoinColumn(name = "ITEM_ID", insertable = false, updatable = false)
     private ItemEntity item;
 
 

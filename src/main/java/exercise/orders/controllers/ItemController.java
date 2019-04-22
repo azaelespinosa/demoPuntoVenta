@@ -3,6 +3,7 @@ package exercise.orders.controllers;
 
 import exercise.orders.dto.ItemDto;
 import exercise.orders.service.ItemService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.util.List;
 @Slf4j
 @RequestMapping("product")
 @RestController
+@Api(description = "Item")
 public class ItemController {
 
     @Autowired

@@ -43,9 +43,9 @@
                     <tr th:each="product : ${products}">
                         <th scope="row" th:text="${product.itemId}"></th>
                         <td th:text="${product.name}"></td>
-                        <td th:text="${product.price}"></td>
+                        <td th:text="${#numbers.formatCurrency(product.price)}"></td>
                         <td th:text="${product.upc}"></td>
-                        <td th:text="${product.discount.value}"></td>
+                        <td th:text="${#numbers.formatCurrency(product.discount.value)}"></td>
 
                     </tr>
                     </tbody>
