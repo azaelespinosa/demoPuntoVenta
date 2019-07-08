@@ -8,9 +8,11 @@ import exercise.orders.service.OrderService;
 import exercise.purchase.dto.PurchaseDetailDto;
 import exercise.purchase.dto.PurchaseDto;
 import exercise.purchase.services.PurchaseClient;
+import exercise.purchase.services.client.PurchaseBaseClient;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,14 +24,16 @@ import java.util.*;
 
 @Slf4j
 @Service
-public class PurchaseClientImpl implements PurchaseClient {
-
+public class PurchaseClientImpl extends PurchaseBaseClient implements PurchaseClient {
 
     @Autowired
     private RestTemplate purchaseRestTemplate;
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private Environment env;
 
 
     @Time
@@ -97,13 +101,11 @@ public class PurchaseClientImpl implements PurchaseClient {
 
     private PurchaseDto sendPurchase(PurchaseDto dto) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-        HttpEntity<PurchaseDto> entity = new HttpEntity<>(dto, headers);
+        HttpEntity httpEntity = createHttpEntity(dto,new Long(env.getProperty("api.key.config")));
 
         log.info("Method sendPurchase - Sending request to Purchase API ");
         return purchaseRestTemplate.exchange(UriComponentsBuilder.fromPath("/order/group/forceClose").toUriString()
-                , HttpMethod.POST, entity, PurchaseDto.class).getBody();
+                , HttpMethod.POST, httpEntity, PurchaseDto.class).getBody();
 
     }
 
